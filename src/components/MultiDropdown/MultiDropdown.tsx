@@ -6,8 +6,6 @@ export type Option = {
   value: string;
 };
 
-type OptionExtention = Option & { selected: boolean };
-
 export type MultiDropdownProps = {
   /** Массив возможных вариантов для выбора */
   options: Option[];
@@ -22,16 +20,18 @@ export type MultiDropdownProps = {
 };
 
 export type MultiDropdownItemProps = {
-  option: OptionExtention;
-  onChange: (option: OptionExtention) => void;
+  option: Option;
+  selected: boolean;
+  onChange: (option: Option) => void;
 };
 
 export const MultiDropdownItem: React.FC<MultiDropdownItemProps> = ({
   option,
+  selected,
   onChange,
 }) => {
   const cls = classname('multi-dropdown__item', {
-    'multi-dropdown__item_selected': option.selected,
+    'multi-dropdown__item_selected': selected,
   });
 
   const handleClick = () => onChange(option);
@@ -43,61 +43,65 @@ export const MultiDropdownItem: React.FC<MultiDropdownItemProps> = ({
   );
 };
 
-const useSelect = (props: MultiDropdownProps) => {
-  const [title, setTitle] = useState<string>('');
-  const [options, setOptions] = useState<OptionExtention[]>([]);
+const isSelected = (o: Option, selected: Option[]) =>
+  selected.some(({ key }) => key === o.key);
 
-  const isSelected = (o: Option, selected: Option[]): boolean =>
-    selected.some(({ key }) => o.key === key);
-
-  const updateOptions = ({ options, value, ...props }: MultiDropdownProps) => {
-    setTitle(props.pluralizeOptions(value));
-    setOptions(options.map((o) => ({ ...o, selected: isSelected(o, value) })));
+export const MultiDropdownList: React.FC<
+  Omit<MultiDropdownProps, 'disabled' | 'pluralizeOptions'>
+> = ({ options, value, onChange }) => {
+  const handleChange = (changed: Option) => {
+    const updated = isSelected(changed, value)
+      ? value.filter((o) => o.key !== changed.key)
+      : options.filter(
+          (o) => o.key === changed.key || isSelected(changed, value)
+        );
+    onChange(updated);
   };
 
-  React.useEffect(() => {
-    updateOptions(props);
-  }, [props.value]);
-
-  return { title, options, updateOptions };
+  return (
+    <div className={'multi-dropdown__list'}>
+      {options.map((option) => (
+        <MultiDropdownItem
+          key={option.key}
+          option={option}
+          selected={isSelected(option, value)}
+          onChange={handleChange}
+        />
+      ))}
+    </div>
+  );
 };
 
-export const MultiDropdown: React.FC<MultiDropdownProps> = (props) => {
+export const MultiDropdown: React.FC<MultiDropdownProps> = ({
+  options,
+  value,
+  disabled,
+  onChange,
+  pluralizeOptions,
+}) => {
   const [isHidden, setHide] = useState<boolean>(true);
-  const { title, options, updateOptions } = useSelect(props);
+  const title = React.useMemo(
+    () => pluralizeOptions(value),
+    [value, pluralizeOptions]
+  );
 
   const cls = classname('multi-dropdown', {
-    'multi-dropdown_disabled': props.disabled,
+    'multi-dropdown_disabled': disabled,
   });
 
-  const handleDropdown = () => props.disabled || setHide((state) => !state);
-
-  const handleChange = (changed: OptionExtention) => {
-    const updated = options.map((o) =>
-      o.key !== changed.key ? o : { ...o, selected: !o.selected }
-    );
-    const value = updated
-      .filter(({ selected }) => selected)
-      .map(({ key, value }: OptionExtention): Option => ({ key, value }));
-    updateOptions({ ...props, value });
-    props.onChange(value);
-  };
+  const handleDropdown = () => disabled || setHide((state) => !state);
 
   return (
     <div className={cls}>
       <div className="multi-dropdown__title" onClick={handleDropdown}>
         {title}
       </div>
-      {props.disabled || isHidden ? null : (
-        <div className={'multi-dropdown__list'}>
-          {options.map((option) => (
-            <MultiDropdownItem
-              key={option.key}
-              option={option}
-              onChange={handleChange}
-            />
-          ))}
-        </div>
+      {disabled || isHidden ? null : (
+        <MultiDropdownList
+          options={options}
+          value={value}
+          onChange={onChange}
+        />
       )}
     </div>
   );
