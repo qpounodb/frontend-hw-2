@@ -1,15 +1,13 @@
 import classname from 'classnames';
 import React, { useState } from 'react';
 
-/** Вариант для выбора в фильтре */
 export type Option = {
-  /** Ключ варианта, используется для отправки на бек/использования в коде */
   key: string;
-  /** Значение варианта, отображается пользователю */
   value: string;
 };
 
-/** Пропсы, которые принимает компонент Dropdown */
+type OptionExtention = Option & { selected: boolean };
+
 export type MultiDropdownProps = {
   /** Массив возможных вариантов для выбора */
   options: Option[];
@@ -23,23 +21,20 @@ export type MultiDropdownProps = {
   pluralizeOptions: (value: Option[]) => string;
 };
 
-const isSelected = (options: Option[], { key }: Option) =>
-  options.some((o) => o.key === key);
+export type MultiDropdownItemProps = {
+  option: OptionExtention;
+  onChange: (option: OptionExtention) => void;
+};
 
-export const MultiDropdownItem: React.FC<{
-  selected: boolean;
-  option: Option;
-  onChange: (option: Option) => void;
-}> = ({ selected, option, onChange }) => {
+export const MultiDropdownItem: React.FC<MultiDropdownItemProps> = ({
+  option,
+  onChange,
+}) => {
   const cls = classname('multi-dropdown__item', {
-    'multi-dropdown__item-selected': selected,
+    'multi-dropdown__item_selected': option.selected,
   });
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onChange(option);
-  };
+  const handleClick = () => onChange(option);
 
   return (
     <div className={cls} onClick={handleClick}>
@@ -48,65 +43,60 @@ export const MultiDropdownItem: React.FC<{
   );
 };
 
-export const MultiDropdownList: React.FC<{
-  options: Option[];
-  initSelected: Option[];
-  onChange: (value: Option[]) => void;
-}> = ({ options, initSelected, onChange }) => {
-  const [selected, setSelected] = useState<Option[]>(initSelected);
+const useSelect = (props: MultiDropdownProps) => {
+  const [title, setTitle] = useState<string>('');
+  const [options, setOptions] = useState<OptionExtention[]>([]);
+
+  const isSelected = (o: Option, selected: Option[]): boolean =>
+    selected.some(({ key }) => o.key === key);
+
+  const updateOptions = ({ options, value, ...props }: MultiDropdownProps) => {
+    setTitle(props.pluralizeOptions(value));
+    setOptions(options.map((o) => ({ ...o, selected: isSelected(o, value) })));
+  };
 
   React.useEffect(() => {
-    setSelected(initSelected);
-  }, [initSelected]);
+    updateOptions(props);
+  }, [props.value]);
 
-  const handleChange = (option: Option) =>
-    setSelected((state) => {
-      const updated = isSelected(state, option)
-        ? state.filter((o) => o.key !== option.key)
-        : [...state, option];
-      onChange(updated);
-      return updated;
-    });
-
-  return (
-    <div className={'multi-dropdown__list'}>
-      {options.map((option) => (
-        <MultiDropdownItem
-          key={option.key}
-          option={option}
-          selected={isSelected(selected, option)}
-          onChange={handleChange}
-        />
-      ))}
-    </div>
-  );
+  return { title, options, updateOptions };
 };
 
-export const MultiDropdown: React.FC<MultiDropdownProps> = ({
-  options,
-  value,
-  disabled,
-  onChange,
-  pluralizeOptions,
-}) => {
+export const MultiDropdown: React.FC<MultiDropdownProps> = (props) => {
   const [isHidden, setHide] = useState<boolean>(true);
+  const { title, options, updateOptions } = useSelect(props);
 
   const cls = classname('multi-dropdown', {
-    'multi-dropdown_disabled': disabled,
+    'multi-dropdown_disabled': props.disabled,
   });
 
-  const handleDropdown = () => disabled || setHide((state) => !state);
+  const handleDropdown = () => props.disabled || setHide((state) => !state);
+
+  const handleChange = (changed: OptionExtention) => {
+    const updated = options.map((o) =>
+      o.key !== changed.key ? o : { ...o, selected: !o.selected }
+    );
+    const value = updated
+      .filter(({ selected }) => selected)
+      .map(({ key, value }: OptionExtention): Option => ({ key, value }));
+    updateOptions({ ...props, value });
+    props.onChange(value);
+  };
 
   return (
-    <div className={cls} onClick={handleDropdown}>
-      <div>{pluralizeOptions(value)}</div>
-      {disabled || isHidden ? null : (
-        <div>
-          <MultiDropdownList
-            options={options}
-            initSelected={value}
-            onChange={onChange}
-          />
+    <div className={cls}>
+      <div className="multi-dropdown__title" onClick={handleDropdown}>
+        {title}
+      </div>
+      {props.disabled || isHidden ? null : (
+        <div className={'multi-dropdown__list'}>
+          {options.map((option) => (
+            <MultiDropdownItem
+              key={option.key}
+              option={option}
+              onChange={handleChange}
+            />
+          ))}
         </div>
       )}
     </div>
