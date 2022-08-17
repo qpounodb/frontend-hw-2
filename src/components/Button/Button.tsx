@@ -42,7 +42,7 @@ export const Button: React.FC<ButtonProps> = ({
   );
 
   return (
-    <button className={cls} {...args}>
+    <button {...args} className={cls}>
       {children}
       {loading && <Loader loading={loading} />}
     </button>

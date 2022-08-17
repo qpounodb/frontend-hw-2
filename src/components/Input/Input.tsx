@@ -32,11 +32,11 @@ export const Input: React.FC<InputProps> = ({
 
   return (
     <input
+      {...args}
       className={cls}
       type="text"
       value={value}
       onChange={changeHandler}
-      {...args}
     />
   );
 };

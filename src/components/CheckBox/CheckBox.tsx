@@ -14,5 +14,5 @@ export const CheckBox: React.FC<CheckBoxProps> = ({ onChange, ...args }) => {
     args.disabled || onChange(e.currentTarget.checked);
   };
 
-  return <input type="checkbox" onChange={handleChange} {...args} />;
+  return <input {...args} type="checkbox" onChange={handleChange} />;
 };
