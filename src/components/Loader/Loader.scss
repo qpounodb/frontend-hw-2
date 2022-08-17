@@ -1,0 +1,37 @@
+.loader {
+  --size: 100px;
+  --border: 10px;
+  --color: var(--color-primary);
+
+  width: var(--size);
+  height: var(--size);
+  border: var(--border) solid var(--color);
+  border-top-color: transparent;
+  border-radius: 50%;
+  transform: rotate(35deg);
+  animation: rotate 1s linear infinite;
+
+  &_size-l {
+    --size: 60px;
+    --border: 6px;
+  }
+
+  &_size-m {
+    --size: 40px;
+    --border: 4.5px;
+  }
+
+  &_size-s {
+    --size: 20px;
+    --border: 3px;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}

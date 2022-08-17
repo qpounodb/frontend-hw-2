@@ -1,6 +1,7 @@
 import classname from 'classnames';
 import React from 'react';
-import { Loader } from '../Loader/Loader';
+import { Loader, LoaderSize } from '../Loader/Loader';
+import './Button.scss';
 
 /** Возможные раскраски кнопки */
 export enum ButtonColor {
@@ -37,14 +38,23 @@ export const Button: React.FC<ButtonProps> = ({
     `button_color-${color}`,
     {
       button_disabled: args.disabled,
+      button_loading: loading,
     },
     className
   );
 
   return (
     <button {...args} className={cls}>
-      {children}
-      {loading && <Loader loading={loading} />}
+      {loading && (
+        <div>
+          <Loader
+            size={LoaderSize.s}
+            loading={loading}
+            className={'button__loader'}
+          />
+        </div>
+      )}
+      <div>{children}</div>
     </button>
   );
 };

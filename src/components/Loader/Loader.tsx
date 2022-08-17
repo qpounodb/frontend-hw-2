@@ -1,5 +1,6 @@
 import classname from 'classnames';
 import React from 'react';
+import './Loader.scss';
 
 /** Возможные значения размера лоадера */
 export enum LoaderSize {

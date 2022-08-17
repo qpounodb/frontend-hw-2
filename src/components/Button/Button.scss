@@ -1,0 +1,67 @@
+.button {
+  --color-default: var(--color-primary);
+  --color-hover: #f88;
+  --color-disabled: #d9d9d9;
+  --color: var(--color-secondary);
+
+  color: #fff;
+  padding: 10px 20px;
+  background-color: #777;
+  border: #777 4px solid;
+  border-radius: 6px;
+  font-size: 23px;
+  transition-property: color, background-color, border-color;
+  transition-duration: 200ms;
+
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+
+  &_loading {
+    padding: 10px 6px;
+  }
+
+  &_color-primary {
+    color: var(--color-secondary);
+    border-color: var(--color-default);
+    background-color: var(--color-default);
+
+    &:hover {
+      border-color: var(--color-hover);
+      background-color: var(--color-hover);
+    }
+    &:disabled {
+      border-color: var(--color-disabled);
+      background-color: var(--color-disabled);
+    }
+    &.button_loading {
+      border-color: var(--color-hover);
+      background-color: var(--color-hover);
+    }
+    & .button__loader {
+      --color: var(--color-secondary);
+    }
+  }
+
+  &_color-secondary {
+    color: var(--color-default);
+    border-color: var(--color-default);
+    background-color: var(--color-secondary);
+
+    &:hover {
+      color: var(--color-hover);
+      border-color: var(--color-hover);
+    }
+    &:disabled {
+      color: var(--color-disabled);
+      border-color: var(--color-disabled);
+    }
+    &.button_loading {
+      color: var(--color-hover);
+      border-color: var(--color-hover);
+    }
+    & .button__loader {
+      --color: var(--color-hover);
+    }
+  }
+}
