@@ -1,4 +1,5 @@
 import React from 'react';
+import './Card.scss';
 
 /** Пропсы, которые принимает компонент Card */
 export type CardProps = {
@@ -22,14 +23,14 @@ export const Card: React.FC<CardProps> = ({
   onClick,
 }) => {
   return (
-    <div onClick={onClick}>
-      <div>
-        <img src={image} alt="image" />
+    <div className="card" onClick={onClick}>
+      <div className="card__side">
+        <img className="card__avatar" src={image} alt="avatar" />
       </div>
-      <div>
-        <h4>{title}</h4>
-        <h5>{subtitle}</h5>
-        <div>{content}</div>
+      <div className="card__main">
+        <div className="card__item card__title">{title}</div>
+        <div className="card__item card__subtitle">{subtitle}</div>
+        <div className="card__item card__content">{content}</div>
       </div>
     </div>
   );
