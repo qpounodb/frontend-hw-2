@@ -6,3 +6,11 @@
   --color-primary: #f55;
   --color-secondary: #fff;
 }
+
+body {
+  margin: 0;
+
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+}
