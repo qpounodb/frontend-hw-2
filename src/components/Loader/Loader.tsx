@@ -35,5 +35,5 @@ export const Loader: React.FC<LoaderProps> = ({
 }) => {
   if (!loading) return null;
   const cls = classname('loader', `loader_size-${size}`, className);
-  return <div className={cls} data-testid="loader"></div>;
+  return <div className={cls}></div>;
 };
