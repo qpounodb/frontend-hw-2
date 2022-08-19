@@ -1,0 +1,21 @@
+.git-repo-tile {
+  &__org-link {
+    color: var(--color-main);
+    text-decoration: none;
+
+    &:hover {
+      color: #208fbf;
+    }
+  }
+
+  &__content {
+    display: flex;
+    column-gap: 20px;
+  }
+
+  &__stars {
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+  }
+}

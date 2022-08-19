@@ -1,3 +1,4 @@
+import classname from 'classnames';
 import React from 'react';
 import './Card.scss';
 
@@ -13,6 +14,8 @@ export type CardProps = {
   content?: React.ReactNode;
   /** Клик на карточку */
   onClick?: React.MouseEventHandler;
+  /** Дополнительные CSS-классы. */
+  className?: string;
 };
 
 export const Card: React.FC<CardProps> = ({
@@ -21,9 +24,10 @@ export const Card: React.FC<CardProps> = ({
   subtitle,
   content,
   onClick,
+  className,
 }) => {
   return (
-    <div className="card" onClick={onClick}>
+    <div className={classname('card', className)} onClick={onClick}>
       <div className="card__side">
         <img className="card__avatar" src={image} alt="avatar" />
       </div>

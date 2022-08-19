@@ -1,5 +1,7 @@
 .card {
   --avatar-size: 80px;
+  --color-main: #7e7e7e;
+  --color-title: #000;
 
   width: 357px;
   height: 104px;
@@ -37,7 +39,7 @@
     row-gap: 4px;
     overflow: hidden;
 
-    color: #7e7e7e;
+    color: var(--color-main);
   }
 
   &__item {
@@ -49,17 +51,6 @@
   &__title {
     font-size: 16px;
     font-weight: bold;
-    color: #000;
-  }
-
-  &__subtitle {
-    &:hover {
-      color: #208fbf;
-    }
-  }
-
-  &__content {
-    display: flex;
-    column-gap: 20px;
+    color: var(--color-title);
   }
 }
