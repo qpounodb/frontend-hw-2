@@ -1,5 +1,5 @@
-import classname from 'classnames';
 import React, { useState } from 'react';
+import { classname } from '../../shared/classname';
 
 export type Option = {
   key: string;
@@ -30,7 +30,8 @@ export const MultiDropdownItem: React.FC<MultiDropdownItemProps> = ({
   selected,
   onChange,
 }) => {
-  const cls = classname('multi-dropdown__item', {
+  const cls = classname({
+    'multi-dropdown__item': true,
     'multi-dropdown__item_selected': selected,
   });
 

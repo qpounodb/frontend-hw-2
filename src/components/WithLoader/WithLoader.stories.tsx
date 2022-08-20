@@ -6,7 +6,7 @@ type Meta = ComponentMeta<typeof WithLoaderComponent>;
 type Story = ComponentStory<typeof WithLoaderComponent>;
 
 export default {
-  title: 'WithLoader',
+  title: 'Loader/WithLoader',
   component: WithLoaderComponent,
 } as Meta;
 
