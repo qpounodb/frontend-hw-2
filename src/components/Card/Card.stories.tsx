@@ -16,6 +16,7 @@ export default meta;
 export const Card: Story = (args) => <CardComponent {...args} />;
 Card.args = {
   image: 'https://picsum.photos/100/100',
+  placeholder: 'S',
   title: 'Title',
   subtitle: 'Subtitle',
   content: 'Content',

@@ -15,6 +15,7 @@ export default meta;
 
 export const GitRepoTile: Story = (args) => <GitRepoTileComponent {...args} />;
 GitRepoTile.args = {
+  placeholder: 'К',
   apiData: {
     name: 'kts-school-frontend',
     html_url: 'https://github.com/ktsstudio/kts-school-frontend',

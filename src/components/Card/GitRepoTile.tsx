@@ -14,11 +14,13 @@ type Owner = Pick<GithubAPI.Owner, 'login' | 'html_url' | 'avatar_url'>;
 
 export type GitRepoTileProps = {
   apiData: ApiData;
+  placeholder?: string;
   onClick?: React.MouseEventHandler;
 };
 
 export const GitRepoTile: React.FC<GitRepoTileProps> = ({
   apiData,
+  placeholder,
   onClick,
 }) => {
   const updatedAt = React.useMemo(() => {
@@ -54,6 +56,7 @@ export const GitRepoTile: React.FC<GitRepoTileProps> = ({
       className="git-repo-tile"
       onClick={onClick}
       image={apiData.owner.avatar_url}
+      placeholder={placeholder || apiData.owner.login}
       title={apiData.name}
       subtitle={link}
       content={content}

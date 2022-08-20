@@ -1,35 +1,50 @@
-import classname from 'classnames';
 import React from 'react';
+import { classname } from '../../shared/classname';
 import './Card.scss';
 
-/** Пропсы, которые принимает компонент Card */
 export type CardProps = {
-  /** URL изображения */
   image: string;
-  /** Заголовок карточки */
+  placeholder?: string;
   title: React.ReactNode;
-  /** Подзаголовок карточки */
   subtitle: React.ReactNode;
-  /** Содержимое карточки (футер/боковая часть), может быть пустым */
   content?: React.ReactNode;
-  /** Клик на карточку */
   onClick?: React.MouseEventHandler;
-  /** Дополнительные CSS-классы. */
   className?: string;
 };
 
+const DEFAULT_PLACEHOLDER = '🍥';
+
 export const Card: React.FC<CardProps> = ({
   image,
+  placeholder = DEFAULT_PLACEHOLDER,
   title,
   subtitle,
   content,
   onClick,
   className,
 }) => {
+  const imgRef = React.useRef<HTMLImageElement | null>(null);
+
+  React.useEffect(() => {
+    if (!imgRef.current) return;
+    const img = imgRef.current;
+    const onLoad = () => img.classList.remove('card__avatar_hidden');
+    img.addEventListener('load', onLoad);
+    return () => img.removeEventListener('load', onLoad);
+  }, []);
+
   return (
     <div className={classname('card', className)} onClick={onClick}>
       <div className="card__side">
-        <img className="card__avatar" src={image} alt="avatar" />
+        <div className="card__placeholder">
+          {placeholder.at(0)?.toUpperCase() || DEFAULT_PLACEHOLDER}
+        </div>
+        <img
+          ref={imgRef}
+          className="card__avatar card__avatar_hidden"
+          src={image}
+          alt="avatar"
+        />
       </div>
       <div className="card__main">
         <div className="card__item card__title">{title}</div>
