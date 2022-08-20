@@ -1,40 +1,27 @@
-import classname from 'classnames';
 import React from 'react';
+import { classname } from '../../shared/classname';
+import './Input.scss';
 
-/** Пропсы, которые принимает компонент Input */
-export type InputProps = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  'onChange'
-> & {
-  /** Значение поля */
+type InputHTMLProps = React.InputHTMLAttributes<HTMLInputElement>;
+type InputChangeHandler = React.ChangeEventHandler<HTMLInputElement>;
+
+export type InputProps = Omit<InputHTMLProps, 'value' | 'onChange'> & {
   value: string;
-  /** Callback, вызываемый при вводе данных в поле */
   onChange: (value: string) => void;
 };
 
 export const Input: React.FC<InputProps> = ({
-  value,
   onChange,
   className = '',
-  ...args
+  ...rest
 }) => {
   const cls = classname({
     input: true,
-    input_disabled: args.disabled,
+    input_disabled: rest.disabled,
     [className]: className.length > 0,
   });
 
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value);
-  };
+  const handler: InputChangeHandler = (e) => onChange(e.target.value);
 
-  return (
-    <input
-      {...args}
-      className={cls}
-      type="text"
-      value={value}
-      onChange={changeHandler}
-    />
-  );
+  return <input {...rest} className={cls} type="text" onChange={handler} />;
 };
