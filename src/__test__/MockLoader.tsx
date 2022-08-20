@@ -5,4 +5,9 @@ export enum LoaderSize {
     m = 'm',
     l = 'l'
 }
-export const Loader: React.FC = () => <div data-testid={Locators.LOADER} />;
+
+type Props = {
+   loading?: boolean;
+};
+
+export const Loader: React.FC<Props> = ({ loading = true }: Props) => loading ? <div data-testid={Locators.LOADER} /> : null;
