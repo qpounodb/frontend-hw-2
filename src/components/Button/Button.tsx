@@ -45,15 +45,13 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <button {...args} className={cls}>
-      {loading && (
-        <div>
-          <Loader
-            size={LoaderSize.s}
-            loading={loading}
-            className={'button__loader'}
-          />
-        </div>
-      )}
+      <div>
+        <Loader
+          size={LoaderSize.s}
+          loading={loading}
+          className={'button__loader'}
+        />
+      </div>
       <div>{children}</div>
     </button>
   );

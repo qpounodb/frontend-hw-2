@@ -15,7 +15,7 @@ export const WithLoader: React.FC<WithLoaderProps> = ({
       {children}
       {loading && (
         <div className={'with-loader__cover'}>
-          <Loader loading={loading} className={'with-loader__loader'} />
+          <Loader className={'with-loader__loader'} />
         </div>
       )}
     </div>
