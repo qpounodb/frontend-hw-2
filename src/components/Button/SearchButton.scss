@@ -1,0 +1,24 @@
+.search-button {
+  width: var(--height);
+  overflow: hidden;
+
+  &.button {
+    justify-content: center;
+    padding: 0;
+
+    &_color-primary {
+      fill: var(--color-secondary);
+    }
+
+    &_color-secondary {
+      fill: var(--color-default);
+
+      &:hover {
+        fill: var(--color-hover);
+      }
+      &:disabled {
+        fill: var(--color-disabled);
+      }
+    }
+  }
+}

@@ -1,13 +1,15 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { Button as ButtonComponent, ButtonColor } from './Button';
+import { ButtonColor } from './BaseButton';
+import { Button as ButtonComponent } from './Button';
 
 type Meta = ComponentMeta<typeof ButtonComponent>;
 type Story = ComponentStory<typeof ButtonComponent>;
 
 const meta: Meta = {
-  title: 'Button',
+  title: 'Button/Button',
   component: ButtonComponent,
+  argTypes: { onClick: { action: 'clicked' } },
 };
 
 export default meta;
