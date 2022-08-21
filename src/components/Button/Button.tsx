@@ -1,5 +1,5 @@
 import React from 'react';
-import { classname } from '../../shared/classname';
+import { classname } from '../../shared/utils';
 import { Loader, LoaderSize } from '../Loader/Loader';
 import { BaseButton, BaseButtonProps } from './BaseButton';
 import './Button.scss';

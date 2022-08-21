@@ -1,5 +1,5 @@
 import React from 'react';
-import { classname, PropsWithClassName } from '../../shared/classname';
+import { classname, PropsWithClassName } from '../../shared/utils';
 import './Loader.scss';
 
 export enum LoaderSize {

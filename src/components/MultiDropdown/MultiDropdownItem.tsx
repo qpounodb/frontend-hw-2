@@ -1,5 +1,5 @@
 import React from 'react';
-import { classname } from '../../shared/classname';
+import { classname } from '../../shared/utils';
 import { MultiDropdownItemProps } from './types';
 
 export const MultiDropdownItem: React.FC<MultiDropdownItemProps> = ({

@@ -1,5 +1,5 @@
 import React from 'react';
-import { classname } from '../../shared/classname';
+import { classname } from '../../shared/utils';
 import './CheckBox.scss';
 
 type InputHTMLProps = React.InputHTMLAttributes<HTMLInputElement>;

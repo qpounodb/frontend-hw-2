@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classname } from '../../shared/classname';
+import { classname } from '../../shared/utils';
 import './Svg.scss';
 
 export type SvgProps = React.SVGProps<SVGSVGElement>;

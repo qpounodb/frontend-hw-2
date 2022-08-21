@@ -1,3 +1,9 @@
+import builder from 'classnames';
+
+export type PropsWithClassName<P = unknown> = { className?: string } & P;
+
+export const classname = builder;
+
 export type Predicat<P extends any[]> = (...args: P) => boolean;
 
 export const not =

@@ -1,5 +1,5 @@
 import React from 'react';
-import { classname, PropsWithClassName } from '../../shared/classname';
+import { classname, PropsWithClassName } from '../../shared/utils';
 import { Svg } from './Svg';
 
 export const SvgStar: React.FC<PropsWithClassName> = ({ className }) => {

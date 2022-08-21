@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { classname } from '../../shared/classname';
 import { useHide } from '../../shared/hooks';
+import { classname } from '../../shared/utils';
 import { Input } from '../Input/Input';
 import './MultiDropdown.scss';
 import { MultiDropdownList } from './MultiDropdownList';
