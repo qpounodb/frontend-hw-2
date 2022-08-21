@@ -4,11 +4,12 @@
   height: var(--height);
   width: 295px;
   padding: 0 12px;
+  outline: none;
   border-radius: 6px;
   border: 1px solid #d9d9d9;
   background-color: #fff;
   color: #000;
-  outline: none;
+  font-size: 14px;
 
   &:focus {
     border-color: var(--color-primary);
@@ -18,6 +19,7 @@
     border-color: #d9d9d9;
     background-color: #f9f9f9;
     color: #7e7e7e;
+    cursor: not-allowed;
   }
 
   &::placeholder {
