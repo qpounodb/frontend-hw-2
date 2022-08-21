@@ -7,7 +7,7 @@ import { MultiDropdownList } from './MultiDropdownList';
 import { MultiDropdownProps } from './types';
 
 export const MultiDropdown: React.FC<MultiDropdownProps> = ({
-  value,
+  value: selected,
   disabled,
   pluralizeOptions,
   placeholder = '',
@@ -15,12 +15,13 @@ export const MultiDropdown: React.FC<MultiDropdownProps> = ({
 }) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
   const [isHidden, setHide] = useState<boolean>(true);
+  const hide = React.useCallback(() => setHide(true), [setHide]);
   const title = React.useMemo(
-    () => pluralizeOptions(value),
-    [value, pluralizeOptions]
+    () => pluralizeOptions(selected),
+    [selected, pluralizeOptions]
   );
 
-  useHide(ref, () => setHide(true));
+  useHide(ref, hide);
 
   const cls = classname({
     'multi-dropdown': true,
@@ -44,7 +45,7 @@ export const MultiDropdown: React.FC<MultiDropdownProps> = ({
         disabled={disabled}
       />
       {disabled || isHidden ? null : (
-        <MultiDropdownList {...rest} selected={value} />
+        <MultiDropdownList {...rest} selected={selected} />
       )}
     </div>
   );
