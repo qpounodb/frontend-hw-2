@@ -6,6 +6,8 @@ import './MultiDropdown.scss';
 import { MultiDropdownList } from './MultiDropdownList';
 import { MultiDropdownProps } from './types';
 
+export type { MultiDropdownProps, Option } from './types';
+
 export const MultiDropdown: React.FC<MultiDropdownProps> = ({
   value: selected,
   disabled,
